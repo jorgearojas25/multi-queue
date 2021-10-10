@@ -6,15 +6,27 @@ import {
   SJFContainer,
   RRContainer,
 } from "./AppComponents";
+import FCFO from "./FCFO";
+import Manager from "./Manager";
+import RR from "./RR";
+import SJF from "./SJF";
 
 function App() {
   return (
     <AppContainer>
-      <ManagerContainer></ManagerContainer>
+      <ManagerContainer>
+        <Manager />
+      </ManagerContainer>
       <QueuesContainer>
-        <FCFOContainer></FCFOContainer>
-        <SJFContainer></SJFContainer>
-        <RRContainer></RRContainer>
+        <FCFOContainer>
+          <FCFO />
+        </FCFOContainer>
+        <SJFContainer>
+          <SJF />
+        </SJFContainer>
+        <RRContainer>
+          <RR />
+        </RRContainer>
       </QueuesContainer>
     </AppContainer>
   );

@@ -1,7 +1,7 @@
 import React from "react";
 
 const SJF = () => {
-  return <div></div>;
+  return <div>SJF components</div>;
 };
 
 export default SJF;
