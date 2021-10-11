@@ -24,8 +24,11 @@ function App() {
   const [sjfQ, setSjfQ] = React.useState(GenerateSJF(5));
   const [rrQ, setRRQ] = React.useState(GenerateRR(5));
   const [blockFCFO, setBlockFCFO] = React.useState(false);
-  const [blockSJF, setBlockSJF] = React.useState(true);
-  const [blockRR, setBlockRR] = React.useState(true);
+  const [blockSJF, setBlockSJF] = React.useState(false);
+  const [blockRR, setBlockRR] = React.useState(false);
+  const [stopFCFO, setStopFCFO] = React.useState(false);
+  const [stopSJF, setStopSJF] = React.useState(true);
+  const [stopRR, setStopRR] = React.useState(true);
   const [globalList, setGlobalList] = React.useState([]);
   const countRef = React.useRef(null);
 
@@ -55,24 +58,27 @@ function App() {
   };
 
   React.useEffect(() => {
-    if (!fcfoQ) {
-      setBlockFCFO(true);
-      setBlockSJF(false);
+    if (blockFCFO) {
+      setStopFCFO(true);
+      setStopSJF(false);
+    }
+    if (blockSJF) {
+      setStopSJF(true);
+      setStopRR(false);
+    }
+    if (blockRR) {
+      setStopRR(true);
+    }
+    if (fcfoQ && !blockFCFO) {
+      setStopFCFO(false);
       return;
     }
-    if (sjfQ && blockFCFO) {
-      setBlockSJF(false);
-    }
-    if (!sjfQ) {
-      setBlockSJF(true);
-      setBlockRR(false);
+    if (!fcfoQ && sjfQ && !blockSJF) {
+      setStopSJF(false);
       return;
     }
-    if (rrQ && blockFCFO && blockSJF) {
-      setBlockRR(false);
-    }
-    if (!rrQ) {
-      setBlockRR(true);
+    if (!fcfoQ && !sjfQ && rrQ && !blockRR) {
+      setStopRR(false);
       return;
     }
   }, [actualJob]);
@@ -81,7 +87,22 @@ function App() {
     setGlobalList([...globalList, element]);
   };
 
-  React.useEffect(() => console.log(globalList), [globalList]);
+  const handleBlockFCFO = () => {
+    setBlockFCFO(!blockFCFO);
+  };
+  const handleBlockSJF = () => {
+    setBlockSJF(!blockSJF);
+  };
+  const handleBlockRR = () => {
+    setBlockRR(!blockRR);
+  };
+
+  //React.useEffect(() => console.log(globalList), [globalList]);
+
+  React.useEffect(
+    () => console.log(stopFCFO, stopSJF, stopRR),
+    [stopFCFO, stopSJF, stopRR]
+  );
 
   return (
     <AppContainer>
@@ -102,10 +123,22 @@ function App() {
             actualJob={actualJob}
             setActualProcess={setActualProcess}
             handleGlobalList={addGlobalList}
+            isBlocked={blockFCFO}
+            stop={stopFCFO}
+            handleBlock={handleBlockFCFO}
           />
         </FCFOContainer>
         <SJFContainer>
-          <SJF />
+          <SJF
+            q={sjfQ}
+            setQ={setSjfQ}
+            actualJob={actualJob}
+            setActualProcess={setActualProcess}
+            handleGlobalList={addGlobalList}
+            isBlocked={blockSJF}
+            stop={stopSJF}
+            handleBlock={handleBlockSJF}
+          />
         </SJFContainer>
         <RRContainer>
           <RR />

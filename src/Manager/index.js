@@ -6,7 +6,7 @@ const Manager = ({ actualJob, actualProcess }) => {
     <>
       <ManagerHead>
         <ManagerText>Proceso actual: {actualProcess?.id}</ManagerText>
-        <ManagerText>Trabajos Procesados: {actualJob}</ManagerText>
+        <ManagerText></ManagerText>
       </ManagerHead>
       <ManagerBody>
         <ManagerText>Alias: {actualProcess?.name}</ManagerText>

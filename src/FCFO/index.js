@@ -10,20 +10,25 @@ import {
 const FCFO = ({
   actualJob,
   setActualProcess,
-  q,
+  q = [],
   setQ,
   isBlocked,
+  handleBlock,
+  stop,
   handleGlobalList,
 }) => {
   const [grantProcess, setGrantProcess] = React.useState({});
   React.useEffect(() => {
-    if (!isBlocked && actualJob > 0) {
+    if (!stop && actualJob > 0) {
       let { actual, actualQ } = ProccessQueue({ q });
-      if (actual.jobs - 1 === actual.actualJobs) {
+      if (actual?.jobs - 1 === actual?.actualJobs) {
         setGrantProcess({ ...actual, start: actualJob });
       }
-      if (!actual.actualJobs) {
+      if (!actual?.actualJobs) {
         setGrantProcess({ ...grantProcess, end: actualJob });
+      }
+      if (actualQ === []) {
+        handleBlock();
       }
 
       setQ(actualQ);
@@ -41,14 +46,13 @@ const FCFO = ({
     setQ(AddOne({ q }));
   };
 
-  if (!q) {
-    return null;
-  }
-
   return (
     <>
       <ControlsContainer>
         <ActionButton onClick={AddOneQ}>Agregar uno</ActionButton>
+        <ActionButton onClick={handleBlock}>
+          {isBlocked ? "desbloquear" : "bloquear"}
+        </ActionButton>
       </ControlsContainer>
       <QueueContainer>
         {q.map((element) => (
