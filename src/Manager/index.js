@@ -15,7 +15,7 @@ const Manager = ({ actualJob, actualProcess }) => {
           Procesos Restantes: {actualProcess?.actualJobs}
         </ManagerText>
         {actualProcess?.limit ? (
-          <ManagerText>Limite: {actualProcess?.limit}</ManagerText>
+          <ManagerText>Quantum: {actualProcess?.limit}</ManagerText>
         ) : null}
       </ManagerBody>
     </>

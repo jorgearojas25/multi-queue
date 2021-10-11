@@ -8,7 +8,7 @@ const Process = ({ id, name, jobs, limit, actualJobs }) => {
       <ProccessText>Proceso: {name}</ProccessText>
       <ProccessText>Rafaga: {jobs}</ProccessText>
       <ProccessText>Rafaga restante: {actualJobs}</ProccessText>
-      {limit ? <ProccessText>Rafaga limite: {limit}</ProccessText> : ""}
+      {limit ? <ProccessText>Quantum: {limit}</ProccessText> : ""}
     </ProcessContainer>
   );
 };

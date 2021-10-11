@@ -58,6 +58,14 @@ function App() {
   };
 
   React.useEffect(() => {
+    if (fcfoQ) {
+      setStopRR(true);
+      setStopSJF(true);
+    }
+    if (sjfQ) {
+      setStopFCFO(true);
+      setStopRR(true);
+    }
     if (blockFCFO) {
       setStopFCFO(true);
       setStopSJF(false);
@@ -81,7 +89,7 @@ function App() {
       setStopRR(false);
       return;
     }
-  }, [actualJob]);
+  }, [actualJob, blockRR, blockSJF, blockFCFO]);
 
   const addGlobalList = (element) => {
     setGlobalList([...globalList, element]);
@@ -141,7 +149,16 @@ function App() {
           />
         </SJFContainer>
         <RRContainer>
-          <RR />
+          <RR
+            q={rrQ}
+            setQ={setRRQ}
+            actualJob={actualJob}
+            setActualProcess={setActualProcess}
+            handleGlobalList={addGlobalList}
+            isBlocked={blockRR}
+            stop={stopRR}
+            handleBlock={handleBlockRR}
+          />
         </RRContainer>
       </QueuesContainer>
     </AppContainer>
