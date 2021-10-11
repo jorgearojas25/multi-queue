@@ -4,5 +4,7 @@ export class Process {
     this.name = name;
     this.jobs = jobs;
     this.limit = limit;
+    this.actualJobs = jobs;
+    this.hide = false;
   }
 }
